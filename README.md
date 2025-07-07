@@ -12,7 +12,7 @@ This project demonstrates how to automate Salesforce Lead creation and validatio
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/naveenkp-tv/playwrightAutomation.git
 cd playwrightAutomation
 ```
 
