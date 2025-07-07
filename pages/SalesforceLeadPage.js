@@ -1,0 +1,32 @@
+const jsforce = require('jsforce');
+const { faker } = require('@faker-js/faker');
+
+class SalesforceLeadPage {
+  constructor(loginUrl, username, password) {
+    this.conn = new jsforce.Connection({ loginUrl });
+    this.username = username;
+    this.password = password;
+  }
+
+  async login() {
+    await this.conn.login(this.username, this.password);
+  }
+
+  async createFakeLead() {
+    const lead = {
+      LastName: faker.person.lastName(),
+      Company: faker.company.name(),
+      Email: faker.internet.email()
+    };
+    return await this.conn.sobject('Lead').create(lead);
+  }
+
+  async getLeadById(id) {
+    const records = await this.conn.sobject('Lead')
+      .find({ Id: id }, { Id: 1, LastName: 1, Company: 1, Email: 1 })
+      .limit(1);
+    return records[0];
+  }
+}
+
+module.exports = { SalesforceLeadPage };
