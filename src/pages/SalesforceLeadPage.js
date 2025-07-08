@@ -28,6 +28,26 @@ class SalesforceLeadPage {
     return records[0];
   }
 
+  async updateLead(id, fields) {
+    return await this.conn.sobject('Lead').update({ Id: id, ...fields });
+  }
+
+  async deleteLead(id) {
+    return await this.conn.sobject('Lead').destroy(id);
+  }
+
+  async describeLead() {
+    return await this.conn.sobject('Lead').describe();
+  }
+
+  async bulkCreateLeads(leads) {
+    return await this.conn.sobject('Lead').create(leads);
+  }
+
+  async soqlQuery(query) {
+    return await this.conn.query(query);
+  }
+
   async logout() {
     await this.conn.logout();
   }
