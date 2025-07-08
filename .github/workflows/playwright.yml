@@ -29,3 +29,18 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
+
+  notify:
+    needs: test
+    runs-on: ubuntu-latest
+    if: always() # Run even if previous job fails
+    steps:
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "Playwright Salesforce Tests completed. Status: ${{ needs.test.result }}."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
