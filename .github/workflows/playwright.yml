@@ -74,6 +74,7 @@ jobs:
         with:
           payload: |
             {
+              "text": "Playwright Test Results: ${{ env.PASSED_COUNT }} passed, ${{ env.FAILED_COUNT }} failed, ${{ env.SKIPPED_COUNT }} skipped.",
               "attachments": [
                 {
                   "color": "${{ steps.tests.outcome == 'success' && 'good' || 'danger' }}",
