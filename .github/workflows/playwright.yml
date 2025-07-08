@@ -27,20 +27,35 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Run Playwright tests and generate JSON report
+        run: npx playwright test --reporter=json > playwright-report.json || true
+
+      - name: Upload Playwright JSON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-json
+          path: playwright-report.json
 
   notify:
     needs: test
     runs-on: ubuntu-latest
     if: always() # Run even if previous job fails
     steps:
-      - name: Send Slack notification
-        uses: slackapi/slack-github-action@v1.25.0
+      - uses: actions/checkout@v4
+
+      - name: Download Playwright JSON report
+        uses: actions/download-artifact@v4
         with:
-          payload: |
-            {
-              "text": "Playwright Salesforce Tests completed. Status: ${{ needs.test.result }}."
-            }
+          name: playwright-report-json
+
+      - name: Parse Playwright JSON report and send Slack notification
+        run: |
+          PASSED=$(jq '[.suites[].specs[].tests[] | select(.results[].status=="passed")] | length' playwright-report.json)
+          FAILED=$(jq '[.suites[].specs[].tests[] | select(.results[].status=="failed")] | length' playwright-report.json)
+          BROKEN=$(jq '[.suites[].specs[].tests[] | select(.results[].status=="timedOut" or .results[].status=="interrupted")] | length' playwright-report.json)
+          SKIPPED=$(jq '[.suites[].specs[].tests[] | select(.results[].status=="skipped")] | length' playwright-report.json)
+          STATUS_MSG="*Playwright Salesforce Tests Results:*
+Passed: $PASSED\nFailed: $FAILED\nBroken: $BROKEN\nSkipped: $SKIPPED"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\": \"$STATUS_MSG\"}" $SLACK_WEBHOOK_URL
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
