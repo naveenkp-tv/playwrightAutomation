@@ -1,7 +1,7 @@
-require("dotenv").config();
-const { test, expect } = require("@playwright/test");
-const { SalesforceLeadPage } = require("../pages/SalesforceLeadPage");
-const { faker } = require("@faker-js/faker");
+require('dotenv').config();
+const { test, expect } = require('@playwright/test');
+const { SalesforceLeadPage } = require('../pages/SalesforceLeadPage');
+const { faker } = require('@faker-js/faker');
 
 let leadPage;
 
@@ -20,56 +20,56 @@ test.afterEach(async () => {
   }
 });
 
-test("Create Lead in Salesforce and validate recordId", async () => {
+test('Create Lead in Salesforce and validate recordId', async () => {
   const result = await leadPage.createFakeLead();
 
-  expect(result).toHaveProperty("id");
+  expect(result).toHaveProperty('id');
   expect(result.success).toBe(true);
   expect(result.id).toMatch(/^00Q/);
 
   // Query and print the created lead's details
   const lead = await leadPage.getLeadById(result.id);
-  console.log("Queried Lead:", {
+  console.log('Queried Lead:', {
     Id: lead.Id,
     LastName: lead.LastName,
     Company: lead.Company,
     Email: lead.Email,
   });
 
-  console.log("Created Lead record Id:", result.id);
+  console.log('Created Lead record Id:', result.id);
 
   // Assertions for queried lead fields
   expect(lead.Id).toBe(result.id);
-  expect(typeof lead.LastName).toBe("string");
+  expect(typeof lead.LastName).toBe('string');
   expect(lead.LastName.length).toBeGreaterThan(0);
-  expect(typeof lead.Company).toBe("string");
+  expect(typeof lead.Company).toBe('string');
   expect(lead.Company.length).toBeGreaterThan(0);
-  expect(typeof lead.Email).toBe("string");
+  expect(typeof lead.Email).toBe('string');
   expect(lead.Email).toMatch(/@/);
 });
 
-test("Update Lead Company and validate", async () => {
+test('Update Lead Company and validate', async () => {
   const result = await leadPage.createFakeLead();
-  const newCompany = "Updated Company " + Date.now();
+  const newCompany = 'Updated Company ' + Date.now();
   await leadPage.updateLead(result.id, { Company: newCompany });
   const updated = await leadPage.getLeadById(result.id);
   expect(updated.Company).toBe(newCompany);
 });
 
-test("Delete Lead and confirm deletion", async () => {
+test('Delete Lead and confirm deletion', async () => {
   const result = await leadPage.createFakeLead();
   await leadPage.deleteLead(result.id);
   const deleted = await leadPage.getLeadById(result.id);
   expect(deleted).toBeUndefined();
 });
 
-test("Describe Lead SObject", async () => {
+test('Describe Lead SObject', async () => {
   const meta = await leadPage.describeLead();
-  expect(meta.name).toBe("Lead");
+  expect(meta.name).toBe('Lead');
   expect(Array.isArray(meta.fields)).toBe(true);
 });
 
-test("Bulk create Leads", async () => {
+test('Bulk create Leads', async () => {
   const leads = Array.from({ length: 3 }).map(() => ({
     LastName: faker.person.lastName(),
     Company: faker.company.name(),
@@ -80,9 +80,7 @@ test("Bulk create Leads", async () => {
   results.forEach((r) => expect(r.success).toBe(true));
 });
 
-test("SOQL Query for Leads", async () => {
-  const records = await leadPage.soqlQuery(
-    "SELECT Id, LastName FROM Lead LIMIT 5"
-  );
+test('SOQL Query for Leads', async () => {
+  const records = await leadPage.soqlQuery('SELECT Id, LastName FROM Lead LIMIT 5');
   expect(records.records.length).toBeLessThanOrEqual(5);
 });

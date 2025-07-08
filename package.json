@@ -2,7 +2,10 @@
   "name": "playwrightautomation",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint src",
+    "format": "prettier --write src"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

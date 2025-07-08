@@ -16,13 +16,14 @@ class SalesforceLeadPage {
     const lead = {
       LastName: faker.person.lastName(),
       Company: faker.company.name(),
-      Email: faker.internet.email()
+      Email: faker.internet.email(),
     };
     return await this.conn.sobject('Lead').create(lead);
   }
 
   async getLeadById(id) {
-    const records = await this.conn.sobject('Lead')
+    const records = await this.conn
+      .sobject('Lead')
       .find({ Id: id }, { Id: 1, LastName: 1, Company: 1, Email: 1 })
       .limit(1);
     return records[0];
