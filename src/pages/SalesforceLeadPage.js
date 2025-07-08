@@ -27,6 +27,10 @@ class SalesforceLeadPage {
       .limit(1);
     return records[0];
   }
+
+  async logout() {
+    await this.conn.logout();
+  }
 }
 
 module.exports = { SalesforceLeadPage };
