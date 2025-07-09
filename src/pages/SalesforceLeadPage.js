@@ -37,6 +37,12 @@ class SalesforceLeadPage {
     return await this.conn.sobject('Lead').destroy(id);
   }
 
+  async convertLead(leadConvert) {
+    // Use SOAP API for lead conversion, which expects an array of LeadConvert objects
+    const results = await this.conn.soap.convertLead([leadConvert]);
+    return results[0];
+  }
+
   async describeLead() {
     return await this.conn.sobject('Lead').describe();
   }
