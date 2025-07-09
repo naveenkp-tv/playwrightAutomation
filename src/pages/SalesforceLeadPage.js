@@ -37,6 +37,13 @@ class SalesforceLeadPage {
     return await this.conn.sobject('Lead').destroy(id);
   }
 
+  async convertLead(leadId, convertedStatus = 'Closed - Converted') {
+    return await this.conn.convertLead({
+      leadId: leadId,
+      convertedStatus: convertedStatus,
+    });
+  }
+
   async describeLead() {
     return await this.conn.sobject('Lead').describe();
   }
