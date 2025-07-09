@@ -94,7 +94,10 @@ test('Convert Lead and verify Account, Contact, and Opportunity creation', async
   // 2. Convert the lead
   // Note: 'Closed - Converted' is a standard status. This may need to be adjusted
   // based on your Salesforce org's specific Lead Status picklist values for conversion.
-  const conversionResult = await leadPage.convertLead(leadResult.id, 'Closed - Converted');
+  const conversionResult = await leadPage.convertLead({
+    leadId: leadResult.id,
+    convertedStatus: 'Closed - Converted',
+  });
   expect(conversionResult.success).toBe(true);
 
   // 3. Verify the creation of Account, Contact, and Opportunity
