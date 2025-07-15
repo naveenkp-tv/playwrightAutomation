@@ -30,7 +30,7 @@ class SalesforcePageHelper {
     const labelX = '//label[text()="' + label + '"]';
     await this.playwrightHelper.verifyLocator(labelX, 10000);
     if (await this.playwrightHelper.checkIfElementExist(labelX)) {
-      const inputX = labelX + "/following::input[1]";
+      const inputX = labelX + '/following::input[1]';
       await this.playwrightHelper.verifyLocator(inputX, 10000);
       if (await this.playwrightHelper.checkIfElementExist(inputX)) {
         await this.playwrightHelper.sendValue(inputX, value);
@@ -44,7 +44,7 @@ class SalesforcePageHelper {
     // await this.page.getByRole('option', { name: value }).click();
   }
 
-  async populateTestData(fieldLabel, value) { 
+  async populateTestData(fieldLabel, value) {
     const fieldType = getFieldTypeByLabel(fieldLabel);
 
     switch (fieldType) {
@@ -55,7 +55,9 @@ class SalesforcePageHelper {
         await this.setValueToPicklist(fieldLabel, value);
         break;
       default:
-        console.warn(`[SalesforcePageHelper] The field type "${fieldType}" for label "${fieldLabel}" is not handled.`);
+        console.warn(
+          `[SalesforcePageHelper] The field type "${fieldType}" for label "${fieldLabel}" is not handled.`
+        );
         break;
     }
   }

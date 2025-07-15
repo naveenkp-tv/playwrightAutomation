@@ -11,11 +11,11 @@ class LoginPage {
     this.playwrightHelper = new PlaywrightHelper(this.page);
 
     // Login Locators
-    this.userNameInput = this.page.getByLabel("Username");
-    this.passwordInput = this.page.getByLabel("Password");
-    this.loginButton = this.page.getByRole("button", {
-      name: "Log In",
-      exact: true
+    this.userNameInput = this.page.getByLabel('Username');
+    this.passwordInput = this.page.getByLabel('Password');
+    this.loginButton = this.page.getByRole('button', {
+      name: 'Log In',
+      exact: true,
     });
   }
 
@@ -24,10 +24,9 @@ class LoginPage {
     await this.userNameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
-    await this.page.waitForURL("**/lightning/**");
+    await this.page.waitForURL('**/lightning/**');
     await this.playwrightHelper.waitUntilHTMLIsRendered();
   }
-
 }
 
 module.exports = { LoginPage };

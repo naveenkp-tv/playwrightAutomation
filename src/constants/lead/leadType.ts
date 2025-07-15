@@ -1,5 +1,5 @@
 const enum LeadType {
-  LEADS = "Leads"
+  LEADS = 'Leads',
 }
 
 export default LeadType;

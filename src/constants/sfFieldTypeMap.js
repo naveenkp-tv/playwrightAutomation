@@ -1,4 +1,4 @@
-const { UILabel } =  require('./enums.js');
+const { UILabel } = require('./enums.js');
 const { FieldType, SalesforceComponentType } = require('../types/fields.js');
 
 export const sfFieldTypeMap = [
@@ -19,7 +19,7 @@ export const sfFieldTypeMap = [
     fieldType: FieldType.Input,
     componentType: SalesforceComponentType.Visualforce, // Standard login page
     recordType: '',
-  }
+  },
 ];
 
 module.exports = { sfFieldTypeMap };

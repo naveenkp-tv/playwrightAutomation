@@ -1,4 +1,3 @@
-
 class PlaywrightHelper {
   Page;
   constructor(page) {
@@ -28,7 +27,7 @@ class PlaywrightHelper {
   }
 
   async sendValue(locator, elementValue) {
-    if (typeof locator === "string") {
+    if (typeof locator === 'string') {
       locator = this.page.locator(locator);
     }
     await locator.waitFor();
@@ -37,10 +36,7 @@ class PlaywrightHelper {
     await locator.fill(elementValue);
   }
 
-  async verifyLocator(
-    locator,
-    timeout
-  ){
+  async verifyLocator(locator, timeout) {
     locator = this.getPageLocator(locator);
     const exists = await this.checkIfElementExist(locator, timeout);
 
@@ -57,24 +53,20 @@ class PlaywrightHelper {
   }
 
   getPageLocator(value) {
-    return typeof value === "string" ? this.page.locator(value) : value;
+    return typeof value === 'string' ? this.page.locator(value) : value;
   }
 
   async waitUntilElemenExists(locator, timeout) {
     locator = this.getPageLocator(locator);
     timeout = timeout ?? 10000;
-    await locator.waitFor({ state: "attached", timeout: timeout });
+    await locator.waitFor({ state: 'attached', timeout: timeout });
   }
 
   async waitUntilDocumentLoaded() {
-    await this.page.waitForLoadState("domcontentloaded", { timeout: 5000 });
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 5000 });
   }
 
-  async waitUntilHTMLIsRendered(
-    timeout,
-    checkInterval,
-    stabilityChecks
-  ) {
+  async waitUntilHTMLIsRendered(timeout, checkInterval, stabilityChecks) {
     timeout = timeout ?? 20000;
     checkInterval = checkInterval ?? 1000;
     stabilityChecks = stabilityChecks ?? 3;
@@ -82,8 +74,7 @@ class PlaywrightHelper {
     let lastHTMLSize = 0;
     let stableCount = 0;
 
-    const delay = (ms) =>
-      new Promise((resolve) => setTimeout(resolve, ms));
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     for (let i = 0; i < maxChecks; i++) {
       if (this.page.isClosed()) {
@@ -93,11 +84,9 @@ class PlaywrightHelper {
 
       try {
         // Ensure page is not navigating before evaluating
-        await this.page.waitForLoadState("domcontentloaded");
+        await this.page.waitForLoadState('domcontentloaded');
 
-        const currentHTMLSize = await this.page.evaluate(
-          () => document.body.innerHTML.length
-        );
+        const currentHTMLSize = await this.page.evaluate(() => document.body.innerHTML.length);
 
         if (currentHTMLSize === lastHTMLSize) {
           stableCount++;
@@ -110,18 +99,17 @@ class PlaywrightHelper {
         await delay(checkInterval);
       } catch (error) {
         // console.warn("Evaluation failed due to possible navigation:", error);
-        await this.page.waitForLoadState("domcontentloaded"); // Ensure page is stable before retrying
+        await this.page.waitForLoadState('domcontentloaded'); // Ensure page is stable before retrying
       }
     }
 
-    throw new Error("Timeout waiting for HTML to stabilize");
+    throw new Error('Timeout waiting for HTML to stabilize');
   }
 
   async waitAndClick(locator) {
     await locator.waitFor();
     await locator.click();
   }
-
 
   async refreshPage() {
     await this.page.reload();

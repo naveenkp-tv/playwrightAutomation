@@ -6,7 +6,11 @@ let loginPage;
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
-  await loginPage.loginMain(process.env.SF_LOGIN_URL_UI, process.env.SF_USERNAME, process.env.SF_PASSWORD);
+  await loginPage.loginMain(
+    process.env.SF_LOGIN_URL_UI,
+    process.env.SF_USERNAME,
+    process.env.SF_PASSWORD
+  );
 });
 
 test.afterEach(async () => {
@@ -17,14 +21,11 @@ test.afterEach(async () => {
 });
 
 test.describe('Lead Management UI Tests', () => {
-
   test.beforeEach(async ({ page }) => {
     // Navigate to the Leads tab before each test in this group
     await page.locator('a[title="Leads"]').click();
     await page.waitForURL(/lightning\/o\/Lead\/list/);
   });
-
-  
 
   test('Navigate to Leads tab and verify title', async ({ page }) => {
     await expect(page.locator('.slds-page-header__title')).toContainText('Leads');
@@ -48,8 +49,8 @@ test.describe('Lead Management UI Tests', () => {
     await page.getByRole('button', { name: 'Save' }).click();
 
     // Verify the success toast message
-    await expect(page.locator('span.toastMessage')).toContainText(`Lead "${lastName}" was created.`);
+    await expect(page.locator('span.toastMessage')).toContainText(
+      `Lead "${lastName}" was created.`
+    );
   });
 });
-})
-

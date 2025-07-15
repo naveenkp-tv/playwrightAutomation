@@ -19,7 +19,7 @@ test.afterEach(async () => {
     await leadPage.logout();
   }
 });
-test.describe.configure({mode: 'serial'});
+test.describe.configure({ mode: 'serial' });
 test('Create Lead in Salesforce and validate recordId', async () => {
   const result = await leadPage.createFakeLead();
 
