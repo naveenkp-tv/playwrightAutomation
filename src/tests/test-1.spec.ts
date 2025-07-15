@@ -1,6 +1,7 @@
-const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../pages/loginPage');
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/loginPage.js';
 
 test.beforeEach(async ({ page }) => {
   const login = new LoginPage(page);
