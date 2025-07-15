@@ -1,10 +1,7 @@
-const { PlaywrightHelper } = require('../helpers/playwrightHelper.js');
-const { SalesforcePageHelper } = require('../helpers/salesforcePageHelper.js');
+import { PlaywrightHelper } from '../helpers/playwrightHelper.js';
+import { SalesforcePageHelper } from '../helpers/salesforcePageHelper.js';
 
-class RecordPage {
-  page;
-  salesforcePageHelper;
-  playwrightHelper;
+export class RecordPage {
   constructor(page) {
     this.page = page;
     this.playwrightHelper = new PlaywrightHelper(page);
@@ -17,5 +14,3 @@ class RecordPage {
     }
   }
 }
-
-module.exports = { RecordPage };

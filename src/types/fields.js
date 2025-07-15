@@ -1,4 +1,4 @@
-const FieldType = {
+export const FieldType = {
   Input: 'Input',
   Picklist: 'Picklist',
   Textarea: 'Textarea',
@@ -9,7 +9,7 @@ const FieldType = {
   Link: 'Link',
 };
 
-const SalesforceComponentType = {
+export const SalesforceComponentType = {
   LWC: 'LWC', // Lightning Web Component
   Aura: 'Aura', // Aura Component
   Visualforce: 'Visualforce',
@@ -18,8 +18,3 @@ const SalesforceComponentType = {
 
 // In a JS file, we can't strongly type this like in TS, but we can use JSDoc.
 /** @typedef {string} RecordType */
-
-module.exports = {
-  FieldType,
-  SalesforceComponentType,
-};

@@ -1,5 +1,4 @@
-class PlaywrightHelper {
-  Page;
+export class PlaywrightHelper {
   constructor(page) {
     this.page = page;
   }
@@ -121,5 +120,3 @@ class PlaywrightHelper {
     await this.waitUntilHTMLIsRendered();
   }
 }
-
-module.exports = { PlaywrightHelper };

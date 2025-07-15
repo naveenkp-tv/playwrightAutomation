@@ -1,6 +1,6 @@
-const { FieldType } = require('../types/fields.js');
-const { sfFieldTypeMap } = require('../constants/sfFieldTypeMap.js');
-const playwrightHelper = require('../helpers/playwrightHelper.js');
+import { FieldType } from '../types/fields.js';
+import { sfFieldTypeMap } from '../constants/sfFieldTypeMap.js';
+import { PlaywrightHelper } from '../helpers/playwrightHelper.js';
 
 /**
  * Looks up the field type from the central map based on its UI label.
@@ -17,12 +17,10 @@ function getFieldTypeByLabel(label) {
   return fieldMapping.fieldType;
 }
 
-class SalesforcePageHelper {
-  page;
-  playwrightHelper;
+export class SalesforcePageHelper {
   constructor(page) {
     this.page = page;
-    this.playwrightHelper = new playwrightHelper.PlaywrightHelper(page);
+    this.playwrightHelper = new PlaywrightHelper(page);
   }
 
   // These are example implementations. You will need to build out the logic for your specific component library.
@@ -62,5 +60,3 @@ class SalesforcePageHelper {
     }
   }
 }
-
-module.exports = { SalesforcePageHelper };

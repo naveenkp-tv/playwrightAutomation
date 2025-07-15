@@ -1,11 +1,11 @@
-const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../pages/loginPage');
-const { RecordController } = require('../controllers/RecordController');
-const { UILabel } = require('../constants/enums');
-const { SalesforceLeadPage } = require('../pages/SalesforceLeadPage');
-require('dotenv').config();
-
-const { faker } = require('@faker-js/faker');
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/loginPage.js';
+import { RecordController } from '../controllers/RecordController.js';
+import { UILabel } from '../constants/enums.js';
+import { SalesforceLeadPage } from '../pages/SalesforceLeadPage.js';
+import { faker } from '@faker-js/faker';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const createLeadData = {
   leadDetails: {

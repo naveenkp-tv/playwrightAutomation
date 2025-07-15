@@ -1,8 +1,8 @@
-const jsforce = require('jsforce');
-const { faker } = require('@faker-js/faker');
-const { expect } = require('@playwright/test');
+import jsforce from 'jsforce';
+import { faker } from '@faker-js/faker';
+import { expect } from '@playwright/test';
 
-class SalesforceLeadPage {
+export class SalesforceLeadPage {
   constructor(loginUrl, username, password) {
     this.conn = new jsforce.Connection({ loginUrl });
     this.username = username;
@@ -73,5 +73,3 @@ class SalesforceLeadPage {
     await page.getByRole('button', { name: 'New' }).click();
   }
 }
-
-module.exports = { SalesforceLeadPage };

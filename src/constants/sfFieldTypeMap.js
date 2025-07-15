@@ -1,5 +1,5 @@
-const { UILabel } = require('./enums.js');
-const { FieldType, SalesforceComponentType } = require('../types/fields.js');
+import { UILabel } from './enums.js';
+import { FieldType, SalesforceComponentType } from '../types/fields.js';
 
 export const sfFieldTypeMap = [
   {
@@ -21,5 +21,3 @@ export const sfFieldTypeMap = [
     recordType: '',
   },
 ];
-
-module.exports = { sfFieldTypeMap };

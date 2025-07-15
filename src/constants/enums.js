@@ -1,4 +1,4 @@
-const UILabel = {
+export const UILabel = {
   // Lead Fields
   LEAD_STATUS: 'Lead Status',
   COMPANY: 'Company',
@@ -19,5 +19,3 @@ const UILabel = {
   EDIT: 'Edit',
   NEW: 'New',
 };
-
-module.exports = { UILabel };

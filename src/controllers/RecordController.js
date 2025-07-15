@@ -1,10 +1,6 @@
-const { RecordPage } = require('../pages/recordPage.js');
+import { RecordPage } from '../pages/recordPage.js';
 
-class RecordController {
-  page;
-  recordData;
-  recordPage;
-
+export class RecordController {
   constructor(page) {
     this.page = page;
     this.recordData = {};
@@ -25,5 +21,3 @@ class RecordController {
     );
   }
 }
-
-module.exports = { RecordController };

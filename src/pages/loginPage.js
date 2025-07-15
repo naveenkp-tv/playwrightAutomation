@@ -1,11 +1,6 @@
-require('dotenv').config();
-const { PlaywrightHelper } = require('../helpers/playwrightHelper');
+import { PlaywrightHelper } from '../helpers/playwrightHelper.js';
 
-class LoginPage {
-  page;
-  url;
-  username;
-  playwrightHelper;
+export class LoginPage {
   constructor(page) {
     this.page = page;
     this.playwrightHelper = new PlaywrightHelper(this.page);
@@ -28,5 +23,3 @@ class LoginPage {
     await this.playwrightHelper.waitUntilHTMLIsRendered();
   }
 }
-
-module.exports = { LoginPage };
