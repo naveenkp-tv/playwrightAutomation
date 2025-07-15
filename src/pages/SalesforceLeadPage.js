@@ -1,5 +1,6 @@
 const jsforce = require('jsforce');
 const { faker } = require('@faker-js/faker');
+const { expect } = require('@playwright/test');
 
 class SalesforceLeadPage {
   constructor(loginUrl, username, password) {
@@ -57,6 +58,19 @@ class SalesforceLeadPage {
 
   async logout() {
     await this.conn.logout();
+  }
+
+  async navigateToLeadsPage(page) {
+    await page.getByRole('button', { name: 'App Launcher' }).click();
+    await expect(page.getByRole('combobox', { name: 'Search apps and items...' })).toBeVisible();
+    await page.getByRole('combobox', { name: 'Search apps and items...' }).click();
+    await page.getByRole('combobox', { name: 'Search apps and items...' }).fill('sales');
+    await expect(page.getByRole('option', { name: 'Sales', exact: true })).toBeVisible();
+    await page.getByRole('option', { name: 'Sales', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'Leads' })).toBeVisible();
+    await page.getByRole('link', { name: 'Leads' }).click();
+    await expect(page.getByRole('button', { name: 'New' })).toBeVisible();
+    await page.getByRole('button', { name: 'New' }).click();
   }
 }
 
