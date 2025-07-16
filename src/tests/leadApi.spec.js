@@ -1,7 +1,8 @@
-require('dotenv').config();
-const { test, expect } = require('@playwright/test');
-const { SalesforceLeadPage } = require('../pages/SalesforceLeadPage');
-const { faker } = require('@faker-js/faker');
+import dotenv from 'dotenv';
+dotenv.config();
+import { test, expect } from '@playwright/test';
+import { SalesforceLeadPage } from '../pages/SalesforceLeadPage.js';
+import { faker } from '@faker-js/faker';
 
 let leadPage;
 
@@ -19,7 +20,7 @@ test.afterEach(async () => {
     await leadPage.logout();
   }
 });
-test.describe.configure({mode: 'serial'});
+test.describe.configure({ mode: 'serial' });
 test('Create Lead in Salesforce and validate recordId', async () => {
   const result = await leadPage.createFakeLead();
 
