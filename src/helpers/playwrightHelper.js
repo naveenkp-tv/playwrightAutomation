@@ -13,15 +13,22 @@ export class PlaywrightHelper {
     await locator.click({ force: true });
   }
 
+  async getAttributeOfTheElement(locator, attributeName) {
+    const element = this.getPageLocator(locator);
+    if (attributeName === 'text') {
+      return (await element.textContent()) || '';
+    }
+    return (await element.getAttribute(attributeName)) || '';
+  }
+
   async checkIfElementExist(locator, timeout) {
     timeout = timeout ?? 10000;
     locator = this.getPageLocator(locator);
     try {
-      // Wait for the element to be present in the DOM
       await locator.first().waitFor({ timeout: timeout });
-      return true; // Element exists
+      return true;
     } catch {
-      return false; // Element does not exist or timeout
+      return false;
     }
   }
 
@@ -77,12 +84,10 @@ export class PlaywrightHelper {
 
     for (let i = 0; i < maxChecks; i++) {
       if (this.page.isClosed()) {
-        // console.warn("Page was closed, stopping waitUntilHTMLIsRendered.");
         return;
       }
 
       try {
-        // Ensure page is not navigating before evaluating
         await this.page.waitForLoadState('domcontentloaded');
 
         const currentHTMLSize = await this.page.evaluate(() => document.body.innerHTML.length);
@@ -97,8 +102,7 @@ export class PlaywrightHelper {
         lastHTMLSize = currentHTMLSize;
         await delay(checkInterval);
       } catch (error) {
-        // console.warn("Evaluation failed due to possible navigation:", error);
-        await this.page.waitForLoadState('domcontentloaded'); // Ensure page is stable before retrying
+        await this.page.waitForLoadState('domcontentloaded');
       }
     }
 
@@ -118,5 +122,17 @@ export class PlaywrightHelper {
   async reloadPage() {
     await this.page.reload();
     await this.waitUntilHTMLIsRendered();
+  }
+
+  async waitForElementVisible(locator, timeout) {
+    locator = this.getPageLocator(locator);
+    timeout = timeout ?? 10000;
+    return await locator.waitFor({ state: 'visible', timeout });
+  }
+
+  async waitUntilElementNotExists(locator, timeout) {
+    locator = this.getPageLocator(locator);
+    timeout = timeout ?? 10000;
+    await locator.waitFor({ state: 'detached', timeout: timeout });
   }
 }
