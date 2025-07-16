@@ -23,6 +23,16 @@ export class SalesforcePageHelper {
     this.playwrightHelper = new PlaywrightHelper(page);
   }
 
+  async getToastMessage() {
+    const toastLocator = '//span[contains(@class, "toastMessage")]';
+    await this.playwrightHelper.waitForElementVisible(toastLocator);
+
+    const isToastPresent = await this.playwrightHelper.checkIfElementExist(toastLocator);
+    return isToastPresent
+      ? await this.playwrightHelper.getAttributeOfTheElement(toastLocator, 'text')
+      : `${ResultMessagePrefix.Error} no toast message captured`;
+  }
+
   // These are example implementations. You will need to build out the logic for your specific component library.
   async sendValueToInput(label, value) {
     const labelX = '//label[text()="' + label + '"]';

@@ -22,6 +22,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Salesforce UI Automation', () => {
   test('Create Lead record', async ({ page }) => {
+    let toastMessage = '';
     const salesforceLeadPage = new SalesforceLeadPage();
     const leadCreation = new RecordController(page);
     leadCreation.recordData = createLeadData.leadDetails;
@@ -31,7 +32,13 @@ test.describe('Salesforce UI Automation', () => {
     });
 
     await test.step(`Create a lead`, async () => {
-      await leadCreation.createRecord();
+      toastMessage = await leadCreation.createRecord();
+    });
+
+    await test.step(`Verify toast message`, async () => {
+      expect(toastMessage).toContain(
+        `Lead "${createLeadData.leadDetails[UILabel.LAST_NAME]}" was created.`
+      );
     });
   });
 });
