@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 
 let leadPage;
 
-test.beforeEach(async () => {
+test.beforeAll(async () => {
   leadPage = new SalesforceLeadPage(
     process.env.SF_LOGIN_URL,
     process.env.SF_USERNAME,
@@ -15,12 +15,12 @@ test.beforeEach(async () => {
   await leadPage.login();
 });
 
-test.afterEach(async () => {
+test.afterAll(async () => {
   if (leadPage) {
     await leadPage.logout();
   }
 });
-test.describe.configure({ mode: 'serial' });
+
 test('Create Lead in Salesforce and validate recordId', async () => {
   const result = await leadPage.createFakeLead();
 
