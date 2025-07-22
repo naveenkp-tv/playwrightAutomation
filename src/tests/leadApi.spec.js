@@ -10,7 +10,7 @@ test.beforeAll(async () => {
   leadPage = new SalesforceLeadPage(
     process.env.SF_LOGIN_URL,
     process.env.SF_USERNAME,
-    process.env.SF_PASSWORD
+    process.env.SF_API_PASSWORD
   );
   await leadPage.login();
 });
